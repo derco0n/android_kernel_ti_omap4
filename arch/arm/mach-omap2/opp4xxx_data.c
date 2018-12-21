@@ -178,7 +178,10 @@ static struct omap_opp_def __initdata omap443x_opp_def_list[] = {
 	/* MPU OPP4 - OPP-NT */
 	OPP_INITIALIZER("mpu", "dpll_mpu_ck", "mpu", true, 1008000000, OMAP4430_VDD_MPU_OPPNITRO_UV),
 	/* MPU OPP5 - OPP-SB */
-	OPP_INITIALIZER("mpu", "dpll_mpu_ck", "mpu", false, 1200000000, OMAP4430_VDD_MPU_OPPNITROSB_UV),
+	//OPP_INITIALIZER("mpu", "dpll_mpu_ck", "mpu", false, 1200000000, OMAP4430_VDD_MPU_OPPNITROSB_UV),
+	OPP_INITIALIZER("mpu", "dpll_mpu_ck", "mpu", true, 1200000000, OMAP4430_VDD_MPU_OPPNITRO_UV), //Enable 1,2 GHz
+	/* OC to 1,3 GHz */
+	OPP_INITIALIZER("mpu", "dpll_mpu_ck", "mpu", true, 1300000000, OMAP4430_VDD_MPU_OPPNITRO_UV), //Enable 1,3 GHz //Testing v3 -> Working. Seems stable
 	/* L3 OPP1 - OPP50 */
 	OPP_INITIALIZER("l3_main_1", "virt_l3_ck", "core", true, 100000000, OMAP4430_VDD_CORE_OPP50_UV),
 	/* L3 OPP2 - OPP100, OPP-Turbo, OPP-SB */
@@ -727,10 +730,11 @@ int __init omap4_opp_init(void)
 		omap4_opp_enable("iva", 500000000);
 
 	/* Enable Nitro and NitroSB MPU OPPs */
-	if (omap4_has_mpu_1_2ghz())
-		omap4_opp_enable("mpu", 1200000000);
-	if (!trimmed)
-		pr_info("This is DPLL un-trimmed SOM. OPP is limited at 1.2 GHz\n");
+	// if (omap4_has_mpu_1_2ghz())
+		omap4_opp_enable("mpu", 1200000000); //Force enable overclocking to 1,2GHz
+		omap4_opp_enable("mpu", 1300000000); //Force enable overclocking to 1,30GHz (ignore trimming here)
+	//if (!trimmed)
+	//	pr_info("This is DPLL un-trimmed SOM. OPP is limited at 1.2 GHz\n");
 	if (omap4_has_mpu_1_5ghz() && trimmed)
 		omap4_opp_enable("mpu", 1500000000);
 
