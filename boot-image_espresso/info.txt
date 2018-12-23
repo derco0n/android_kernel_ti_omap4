@@ -1,0 +1,5 @@
+This folder will not be touched during repo-build.
+
+It is only affected by custom buildscript, to provide a systemimage.
+
+derCo0n, 23.12.2018
