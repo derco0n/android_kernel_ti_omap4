@@ -1,4 +1,4 @@
-/*
+ /*
  * OMAP4 OPP table definitions.
  *
  * Copyright (C) 2010-2011 Texas Instruments Incorporated - http://www.ti.com/

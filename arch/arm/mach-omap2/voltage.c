@@ -1,4 +1,4 @@
-/*
+ /*
  * OMAP3/OMAP4 Voltage Management Routines
  *
  * Author: Thara Gopinath	<thara@ti.com>

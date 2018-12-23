@@ -1,4 +1,4 @@
-/*
+ /*
  * OMAP Voltage Management Routines
  *
  * Author: Thara Gopinath	<thara@ti.com>
