@@ -1,4 +1,4 @@
-This kernel is based on the ti_omap-kernel 3.0 from Unlegacy-Android
+This kernel is based on the [ti_omap-kernel 3.0 from Unlegacy-Android](https://github.com/Unlegacy-Android/android_kernel_ti_omap4)
 
 Major Changes:
 --------------
