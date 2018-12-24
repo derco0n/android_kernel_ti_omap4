@@ -1,4 +1,16 @@
-	Linux kernel release 3.x <http://kernel.org/>
+This kernel is based on the ti_omap-kernel 3.0 from Unlegacy-Android
+
+Major Changes:
+--------------
+- Overclocked to 1,35 GHz
+- Support for various filesystems (NTFS, ext3, CD/DVD)
+- included drivers for various USB-Wifi-Dongles
+- Wifi-Packet Injection Patch
+
+
+
+Linux kernel release 3.x <http://kernel.org/>
+---------------------------------------------
 
 These are the release notes for Linux version 3.  Read them carefully,
 as they tell you what this is all about, explain how to install the
