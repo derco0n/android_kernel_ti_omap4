@@ -7,7 +7,7 @@ KERNEL_DIR=$PWD
 ZIMAGE=$KERNEL_DIR/arch/arm/boot/zImage
 BOOTIMAGEDIR=$KERNEL_DIR/boot-image_espresso
 SRCBOOTIMAGE=src_ua_71_boot.img
-OUTBOOTIMGNAME=ua-71_espresso_coonzmod-octest_boot_arm-eabi_4.6.img
+OUTBOOTIMGNAME=ua-71_espresso_boot_arm-eabi_4.6.img
 BUILD_START=$(date +"%s")
 THREADS=9
 
@@ -31,6 +31,28 @@ export KBUILD_BUILD_HOST="AlienCo0n"
 #export CROSS_COMPILE="/media/co0n/7a59f274-2a0c-4233-a4bf-03233b45a7e9/android-builds/lineage-galaxytab2/toolchains/arm-linux-androideabi-4.9/bin/arm-linux-androideabi-"
 export CROSS_COMPILE="/media/co0n/7a59f274-2a0c-4233-a4bf-03233b45a7e9/android-builds/lineage-galaxytab2/toolchains/arm-eabi-4.6/bin/arm-eabi-"
 
+#Cleans directories after build
+cleanup ()
+{
+#make clean && make mrproper
+cd $BOOTIMAGEDIR
+find . ! -name '*.img' -type f -exec rm -f {} +
+cd $KERNEL_DIR
+}
+
+#Gets the version of compiled zImage
+#get_compiledversion ()
+#{
+#cd $BOOTIMAGEDIR
+#pos=$(grep -P -a -b -m 1 --only-matching '\x5D\x00\x00' $ZIMAGE | cut -f 1 -d :)
+#dd if=$ZIMAGE of=piggy.lzma bs=1 skip=$pos
+#unlzma -c piggy.lzma > tmpImage
+#VERSION=strings tmpImage | grep 'Linux version'
+#echo "Version is: $VERSION"
+#OUTBOOTIMGNAME=$VERSION_$OUTBOOTIMGNAME
+#cd $KERNEL_DIR
+#}
+
 # Packs compiled zImage into flashable boot.img
 pack_image ()
 {
@@ -52,8 +74,8 @@ echo -e "***********************************************$nocol"
 make clean && make mrproper
 #Which config to use
 
-#make espresso-coon-oc_defconfig #Default config
 make espresso-cm-oc_defconfig
+#make espresso-cm-oc_old_defconfig
 make menuconfig
 BUILD_START=$(date +"%s")
 
@@ -72,8 +94,15 @@ make ARCH=arm -j$THREADS clean mrproper
 rm -rf include/linux/autoconf.h
 ;;
 *)
+echo "Step 1: Building kernel"
 compile_kernel
+#echo "Step 2: Determing Kernelbuild-version"
+#get_compiledversion
+echo "Step 2: Packing Bootimage"
 pack_image
+echo "Finish: Cleaning..."
+cleanup 
+
 ;;
 esac
 BUILD_END=$(date +"%s")
